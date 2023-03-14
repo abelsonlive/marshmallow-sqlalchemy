@@ -9,6 +9,7 @@ from packaging.version import Version
 from sqlalchemy.dialects import postgresql, mysql, mssql
 from sqlalchemy.orm import SynonymProperty
 import sqlalchemy as sa
+from sqlalchemy.exc import SAWarning
 
 from .exceptions import ModelConversionError
 from .fields import Related, RelatedList
@@ -16,6 +17,7 @@ from .fields import Related, RelatedList
 
 _META_KWARGS_DEPRECATED = Version(ma.__version__) >= Version("3.10.0")
 
+warnings.filterwarnings("ignore", category=SAWarning)
 
 def _is_field(value):
     return isinstance(value, type) and issubclass(value, fields.Field)
@@ -256,7 +258,7 @@ class ModelConverter:
             # Try to find a field class based on the column's python_type
             try:
                 python_type = data_type.python_type
-            except NotImplementedError:
+            except (NotImplementedError, AttributeError):
                 python_type = None
 
             if python_type in self.type_mapping:
