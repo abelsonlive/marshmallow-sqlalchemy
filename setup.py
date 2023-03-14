@@ -50,7 +50,7 @@ def read(fname):
 
 
 setup(
-    name="marshmallow-sqlalchemy",
+    name="marshmallow-sqlalchemy-310",
     version=find_version("src/marshmallow_sqlalchemy/__init__.py"),
     description="SQLAlchemy integration with the marshmallow (de)serialization library",
     long_description=read("README.rst"),
